@@ -1,6 +1,7 @@
 import unittest
 from abstract_melody_parser.melody_parser import parse_midi_note, parse_musical_notes
-from abstract_melody_parser.rhythmic_parser import get_durations
+from abstract_melody_parser.rhythmic_parser import get_durations, MidiNoteQueue
+from mocks import midiNoteQueueMock, midiNoteQueue
 
 
 class TestParseMidiNote(unittest.TestCase):
@@ -43,6 +44,29 @@ class TestGetDurations(unittest.TestCase):
         self.assertAlmostEqual(rhythmic_dictionary['8t'], 1 / 3)
         self.assertAlmostEqual(rhythmic_dictionary['16'], 1 / 4)
         self.assertAlmostEqual(rhythmic_dictionary['16t'], 1 / 6)
+
+
+class TestMidiNoteQueue(unittest.TestCase):
+    def test_mock0(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[0])
+
+    def test_mock1(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[1])
+
+    def test_mock2(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[2])
+
+    def test_mock3(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[3])
+
+    def test_mock4(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[4])
+
+    def test_mock5(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[5])
+
+    def test_mock6(self):
+        self.assertEqual(midiNoteQueue.pop(), midiNoteQueueMock[8])
 
 
 if __name__ == '__main__':
