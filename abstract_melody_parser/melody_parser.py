@@ -1,4 +1,4 @@
-from parser.chords import chord_tones
+from abstract_melody_parser.chords import chord_tones
 
 """
 Musical notes.
@@ -22,11 +22,11 @@ def parse_midi_note(midi_note):
 def parse_musical_notes(musical_note, chord):
     """
     Function that given a chord, parses a musical note
-    into an abstract melody notation.
+    into an abstract melody_parser notation.
 
     :param musical_note: standard note notation
     :param chord: chord notation
-    :return: abstract melody note
+    :return: abstract melody_parser note
     """
     if musical_note == 'R':
         return 'r'
