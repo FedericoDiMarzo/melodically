@@ -53,8 +53,8 @@ class MidiNoteQueue:
         # timestamp of the last note_on message
         self._last_timestamp = 0
 
-        # midi value of the last note_on message
-        self._last_note_on_value = -1
+        # list of midi values of the note_on messages that are not closed yet
+        self._open_note_on_list = []
 
         # threshold in seconds to discard notes that are too close
         self._minimum_interval = 0.06
@@ -71,20 +71,32 @@ class MidiNoteQueue:
         if midi_msg['type'] == 'note_on':  # note_on case
             # checking if the pushed note_on is too close with the last one
             if midi_msg['timestamp'] - self._last_timestamp > self._minimum_interval:
-                self._last_note_on_value = midi_msg['note']
+                self._open_note_on_list.append(midi_msg['note'])
                 self._container.append(midi_msg)
 
         elif midi_msg['type'] == 'note_off':  # note_off case
             # checking if the note_off closes a note on
-            if midi_msg['note'] == self._last_note_on_value:
+            if midi_msg['note'] in self._open_note_on_list:
+                self._open_note_on_list.remove(midi_msg['note'])
                 self._container.append(midi_msg)
 
         # all other types of midi messages are excluded automatically
 
     def pop(self):
         """
-        Pops a midi message from the queue.
+        Pops a midi message from the front of the queue.
 
-        :return: midi message
+        :return: midi message with timestamp
         """
-        return self._container.pop()
+        return self._container.pop(0)
+
+    def get_container(self):
+        """
+        Getter for the container used for the queue
+
+        :return: list of midi messages with timestamp
+        """
+        return self._container
+
+def parse_rhythm():
+    
