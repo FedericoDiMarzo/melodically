@@ -1,3 +1,5 @@
+from parser.chords import chord_tones
+
 """
 Musical notes.
 
@@ -15,3 +17,22 @@ def parse_midi_note(midi_note):
     :return: musical note
     """
     return musical_notes[midi_note % 12]
+
+
+def parse_musical_notes(musical_note, chord):
+    """
+    Function that given a chord, parses a musical note
+    into an abstract melody notation.
+
+    :param musical_note: standard note notation
+    :param chord: chord notation
+    :return: abstract melody note
+    """
+    if musical_note == 'R':
+        return 'r'
+    if musical_note in chord_tones[chord]['c']:
+        return 'c'
+    elif musical_note in chord_tones[chord]['l']:
+        return 'l'
+    else:
+        return 'x'
