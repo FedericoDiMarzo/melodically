@@ -42,7 +42,8 @@ def get_durations(bpm):
 
 class MidiNoteQueue:
     """
-    A midi queue containing note_on/off midi messages and timestamps.
+    A midi queue containing note_on/off midi messages and timestamps
+    (the data structure returned by the get_timestamp_msg function).
     This queue is used by the rhythmic parser algorithm.
     """
 
@@ -98,21 +99,55 @@ class MidiNoteQueue:
         """
         return self._container
 
+    def clean_unclosed_note_ons(self):
+        """
+        Removes from the queue the unclosed note_on messages
+        """
+        for open_note in self._open_note_on_list:
+            index = len(self._container) - 1  # the index the we're checking
+            # searching for the most recent note_on with note == open_note
+            while not (self._container[index]['type'] == 'note_on' and self._container[index]['note'] == open_note):
+                index = index - 1
+            del self._container[index]  # removing the open note_on message
+            self._open_note_on_list.remove(open_note)  # removing the open note reference
 
-def get_nearest_rhythm():
-    pass
+# {
+#         '1': beat_time * 4,
+#         '2': beat_time * 2,
+#         '4': beat_time * 1,
+#         '4dot': beat_time * 3 / 2,
+#         '4t': beat_time * 2 / 3,
+#         '8': beat_time * 1 / 2,
+#         '8t': beat_time * 1 / 3,
+#         '16': beat_time * 1 / 4,
+#         '16t': beat_time * 1 / 6,
+#     }
 
+def get_nearest_rhythm(interval, rhythmical_durations):
+    """
+    Given a certain interval in seconds, gets the rhythmical duration
+    that has the lower distance with it.
 
-def parse_rhythm(midiQueue, rhythmical_durations):
+    :param interval: duration in seconds
+    :param rhythmical_durations: dictionary returned by the get_durations
+    :return:
+    """
+    rhythmical_durations_values = list(rhythmical_durations.values())
+    distances = [abs(interval - x) for x in rhythmical_durations_values]
+    result_index = distances.index(min(distances))
+    
+
+def parse_rhythm(midi_queue, rhythmical_durations):
     result = []  # this list will contain the rhythmical symbols
-    for i in range(len(midiQueue)):
-        if midiQueue[i]['type'] == 'note_on':
-            j = i
+    for i in range(len(midi_queue)):
+        if midi_queue[i]['type'] == 'note_on':
+            j = i + 1
             # finding the corresponding subsequent note_off
-            # TODO: check the index bounding
-            while not (midiQueue[j]['type'] == 'note_off' and midiQueue[j]['note'] == midiQueue[i]['note']):
+            while not (midi_queue[j]['type'] == 'note_off' and midi_queue[j]['note'] == midi_queue[i]['note']):
                 j = j + 1
             # from here on j is the index of the note_off
-            interval = midiQueue[j]['timestamp'] - midiQueue[i]['timestamp']
+            interval = midi_queue[j]['timestamp'] - midi_queue[i]['timestamp']
             # TODO: create distance function
-            get_nearest_rhythm(interval, rhythmical_durations)
+            rhythm = get_nearest_rhythm(interval, rhythmical_durations)
+            result.append(rhythm)
+    return result
