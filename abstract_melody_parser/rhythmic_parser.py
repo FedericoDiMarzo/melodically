@@ -98,5 +98,21 @@ class MidiNoteQueue:
         """
         return self._container
 
-def parse_rhythm():
-    
+
+def get_nearest_rhythm():
+    pass
+
+
+def parse_rhythm(midiQueue, rhythmical_durations):
+    result = []  # this list will contain the rhythmical symbols
+    for i in range(len(midiQueue)):
+        if midiQueue[i]['type'] == 'note_on':
+            j = i
+            # finding the corresponding subsequent note_off
+            # TODO: check the index bounding
+            while not (midiQueue[j]['type'] == 'note_off' and midiQueue[j]['note'] == midiQueue[i]['note']):
+                j = j + 1
+            # from here on j is the index of the note_off
+            interval = midiQueue[j]['timestamp'] - midiQueue[i]['timestamp']
+            # TODO: create distance function
+            get_nearest_rhythm(interval, rhythmical_durations)
