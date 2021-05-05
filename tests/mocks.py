@@ -1,5 +1,6 @@
 from abstract_melody_parser.rhythmic_parser import MidiNoteQueue
-midiNoteQueueMock = [
+
+midiNoteQueueMock1 = [
     # normal note on/off
     {
         'type': 'note_on',
@@ -67,6 +68,33 @@ midiNoteQueueMock = [
     }
 ]
 
-midiNoteQueue = MidiNoteQueue()
-for msg in midiNoteQueueMock:
-    midiNoteQueue.push(msg)
+midiNoteQueueMock2 = [
+    # an unclosed note on
+    {
+        'type': 'note_on',
+        'note': 75,
+        'timestamp': 40
+    },
+
+    # an note on that is closed by a note off
+    {
+        'type': 'note_on',
+        'note': 70,
+        'timestamp': 30
+    },
+
+    {
+        'type': 'note_off',
+        'note': 70,
+        'timestamp': 45
+    },
+]
+
+midiNoteQueue1 = MidiNoteQueue()
+for msg in midiNoteQueueMock1:
+    midiNoteQueue1.push(msg)
+
+midiNoteQueue2 = MidiNoteQueue()
+for msg in midiNoteQueueMock2:
+    midiNoteQueue2.push(msg)
+midiNoteQueue2.clean_unclosed_note_ons()
