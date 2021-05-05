@@ -101,7 +101,7 @@ class MidiNoteQueue:
 
     def clean_unclosed_note_ons(self):
         """
-        Removes from the queue the unclosed note_on messages
+        Removes from the queue the unclosed note_on messages.
         """
         for open_note in self._open_note_on_list:
             index = len(self._container) - 1  # the index the we're checking
@@ -110,6 +110,14 @@ class MidiNoteQueue:
                 index = index - 1
             del self._container[index]  # removing the open note_on message
             self._open_note_on_list.remove(open_note)  # removing the open note reference
+
+    def clear(self):
+        """
+        Removes all the elements from the queue.
+        """
+        self._container.clear()
+        self._last_timestamp = 0
+        self._open_note_on_list = []
 
 
 def get_nearest_rhythm(interval, rhythmical_durations):
@@ -144,15 +152,23 @@ def get_nearest_rhythm(interval, rhythmical_durations):
 
 
 def parse_rhythm(midi_queue, rhythmical_durations):
+    """
+    Parse a midi
+    :param midi_queue:
+    :param rhythmical_durations:
+    :return:
+    """
+    # TODO: parse the rests too
     result = []  # this list will contain the rhythmical symbols
-    for i in range(len(midi_queue)):
-        if midi_queue[i]['type'] == 'note_on':
+    midi_queue_container = midi_queue.get_container()
+    for i in range(len(midi_queue_container)):
+        if midi_queue_container[i]['type'] == 'note_on':
             j = i + 1
             # finding the corresponding subsequent note_off
-            while not (midi_queue[j]['type'] == 'note_off' and midi_queue[j]['note'] == midi_queue[i]['note']):
+            while not (midi_queue_container[j]['type'] == 'note_off' and midi_queue_container[j]['note'] == midi_queue_container[i]['note']):
                 j = j + 1
             # from here on j is the index of the note_off
-            interval = midi_queue[j]['timestamp'] - midi_queue[i]['timestamp']
+            interval = midi_queue_container[j]['timestamp'] - midi_queue_container[i]['timestamp']
 
             # getting the closest rhythmic figure and adding it to the result
             rhythm = get_nearest_rhythm(interval, rhythmical_durations)
