@@ -1,6 +1,7 @@
 from abstract_melody_parser.rhythmic_parser import MidiNoteQueue
 
-midiNoteQueueMock1 = [
+# used to test the MidiQueue class
+midi_note_queue_mock_1 = [
     # normal note on/off
     {
         'type': 'note_on',
@@ -68,7 +69,8 @@ midiNoteQueueMock1 = [
     }
 ]
 
-midiNoteQueueMock2 = [
+# used to test the MidiQueue class
+midi_note_queue_mock_2 = [
     # an unclosed note on
     {
         'type': 'note_on',
@@ -90,11 +92,70 @@ midiNoteQueueMock2 = [
     },
 ]
 
-midiNoteQueue1 = MidiNoteQueue()
-for msg in midiNoteQueueMock1:
-    midiNoteQueue1.push(msg)
+# used to test the parse_rhythm function
+# the bpm is supposed to be 60
+# correct output: ['1', '16', '16', '4']
+# TODO: add more notes and rests too
+midi_note_queue_mock_3 = [
 
-midiNoteQueue2 = MidiNoteQueue()
-for msg in midiNoteQueueMock2:
-    midiNoteQueue2.push(msg)
-midiNoteQueue2.clean_unclosed_note_ons()
+    # whole note
+    {
+        'type': 'note_on',
+        'note': 65,
+        'timestamp': 1 - 0.003
+    },
+
+    {
+        'type': 'note_off',
+        'note': 65,
+        'timestamp': 5 - 0.001
+    },
+
+    # sixteenth note
+    {
+        'type': 'note_on',
+        'note': 55,
+        'timestamp': 6
+    },
+
+    {
+        'type': 'note_off',
+        'note': 55,
+        'timestamp': 6.25 + 0.001
+    },
+
+    # sixteenth note
+    {
+        'type': 'note_on',
+        'note': 45,
+        'timestamp': 6
+    },
+
+    {
+        'type': 'note_off',
+        'note': 45,
+        'timestamp': 6.25 + 0.001
+    },
+
+    # quarter note
+    {
+        'type': 'note_on',
+        'note': 75,
+        'timestamp': 8
+    },
+
+    {
+        'type': 'note_off',
+        'note': 75,
+        'timestamp': 9 + 0.02
+    },
+]
+
+midi_note_queue_1 = MidiNoteQueue()
+for msg in midi_note_queue_mock_1:
+    midi_note_queue_1.push(msg)
+
+midi_note_queue_2 = MidiNoteQueue()
+for msg in midi_note_queue_mock_2:
+    midi_note_queue_2.push(msg)
+midi_note_queue_2.clean_unclosed_note_ons()
