@@ -1,7 +1,7 @@
 import unittest
 from abstract_melody_parser.melody_parser import parse_midi_note, parse_musical_notes
-from abstract_melody_parser.rhythmic_parser import get_durations, get_nearest_rhythm
-from mocks import midiNoteQueueMock1, midiNoteQueueMock2, midiNoteQueue1, midiNoteQueue2
+from abstract_melody_parser.rhythmic_parser import get_durations, get_nearest_rhythm, MidiNoteQueue, parse_rhythm
+from mocks import midi_note_queue_mock_1, midi_note_queue_mock_2, midi_note_queue_mock_3, midi_note_queue_1, midi_note_queue_2
 
 
 class TestParseMidiNote(unittest.TestCase):
@@ -48,31 +48,38 @@ class TestGetDurations(unittest.TestCase):
 
 class TestMidiNoteQueue(unittest.TestCase):
     def test_mock_1_0(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[0])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[0])
 
     def test_mock_1_1(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[1])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[1])
 
     def test_mock_1_2(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[2])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[2])
 
     def test_mock_1_3(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[3])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[3])
 
     def test_mock_1_4(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[4])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[4])
 
     def test_mock_1_5(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[5])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[5])
 
     def test_mock_1_6(self):
-        self.assertEqual(midiNoteQueue1.pop(), midiNoteQueueMock1[8])
+        self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[8])
 
     def test_mock_2_0(self):
-        self.assertEqual(midiNoteQueue2.pop(), midiNoteQueueMock2[1])
+        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[1])
 
     def test_mock_2_1(self):
-        self.assertEqual(midiNoteQueue2.pop(), midiNoteQueueMock2[2])
+        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[2])
+
+    def test_clear(self):
+        midi_queue = MidiNoteQueue()
+        for msg in midi_note_queue_mock_3:
+            midi_queue.push(msg)
+        midi_queue.clear()
+        self.assertEqual([], midi_queue.get_container())
 
 
 class TestGetNearestRhythm(unittest.TestCase):
@@ -95,7 +102,19 @@ class TestGetNearestRhythm(unittest.TestCase):
         self.assertEqual('16t', get_nearest_rhythm(0.001, self.durations))
 
     def test_5(self):
-        self.assertEqual('16', get_nearest_rhythm(1/4-0.02, self.durations))
+        self.assertEqual('16', get_nearest_rhythm(1 / 4 - 0.02, self.durations))
+
+
+class TestParseRhythm(unittest.TestCase):
+    def setUp(self):
+        self.durations = get_durations(60)
+        self.midi_queue = MidiNoteQueue()
+        for msg in midi_note_queue_mock_3:
+            self.midi_queue.push(msg)
+
+    def test_0(self):
+        result = parse_rhythm(self.midi_queue, self.durations)
+        self.assertEqual(['1', '16', '16', '4'], result)
 
 
 if __name__ == '__main__':
