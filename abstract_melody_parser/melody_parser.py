@@ -19,7 +19,7 @@ def parse_midi_note(midi_note):
     return musical_notes[midi_note % 12]
 
 
-def parse_musical_notes(musical_note, chord):
+def parse_musical_note(musical_note, chord):
     """
     Function that given a chord, parses a musical note
     into an abstract melody_parser notation.
