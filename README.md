@@ -101,6 +101,31 @@ durations = abs.rhythm.get_durations(bpm)
 After defining the durations from the bpm, the parsing can follow. It will return a list of symbols for all the notes in the melody.
 
 ```python
-noteQueue.clean_unclosed_note_ons()
+noteQueue.clean_unclosed_note_ons() # always do that before parsing
 rhythmic_symbols = abs.rhythm.parse_rhythm(note_queue, durations)
+```
+
+## Putting all together
+
+Sometimes the informative content of a melody can only be found in the rhythm or in the armonic relations between the notes and a chord, but in many other occasions, is the underlying relation between the two that really expresses the message that a musitian is trying to share with his/her performance. Following this perspective, it can be useful to perform both melodic and rhythmic parsing from a single MidiQueue, and read the resulting symbols as pairs. Let's suppose to parse a MidiQueue that contains a melody playing on a Dm chord
+
+```python
+current_chord = 'Dm'
+bpm = 125
+durations = abs.rhythm.get_durations(bpm)
+
+noteQueue.clean_unclosed_note_ons() # again, don't forget to clean the unclosed note_on messages
+notes = midi_queue.get_notes()
+
+# list comprehension to map the std notes to an abstract melody
+abstract_melody = [amp.melody.parse_musical_note(note, current_chord) for note in notes]
+
+# getting the rhythm too
+rhythm = amp.rhythm.parse_rhythm(midi_queue, durations)
+
+```
+
+The resulting lists can than be merged in a single one.
+```python
+full_melody = [x+y for x in abstract_melody for y in rhythm]
 ```
