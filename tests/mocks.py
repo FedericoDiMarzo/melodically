@@ -75,7 +75,14 @@ midi_note_queue_mock_2 = [
     {
         'type': 'note_on',
         'note': 75,
-        'timestamp': 40
+        'timestamp': 20
+    },
+
+    # another unclosed note on
+    {
+        'type': 'note_on',
+        'note': 76,
+        'timestamp': 22
     },
 
     # an note on that is closed by a note off

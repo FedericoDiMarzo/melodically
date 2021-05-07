@@ -68,10 +68,10 @@ class TestMidiNoteQueue(unittest.TestCase):
         self.assertEqual(midi_note_queue_1.pop(), midi_note_queue_mock_1[8])
 
     def test_mock_2_0(self):
-        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[1])
+        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[2])
 
     def test_mock_2_1(self):
-        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[2])
+        self.assertEqual(midi_note_queue_2.pop(), midi_note_queue_mock_2[3])
 
     def test_clear(self):
         midi_queue = MidiNoteQueue()
