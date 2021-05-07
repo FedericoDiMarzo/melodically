@@ -60,7 +60,7 @@ def parse_rhythm(midi_queue, rhythmical_durations):
     :param rhythmical_durations:
     :return:
     """
-    # TODO: parse the rests too
+    # TODO: parse the rests too?
     result = []  # this list will contain the rhythmical symbols
     midi_queue_container = midi_queue.get_container()
     for i in range(len(midi_queue_container)):
