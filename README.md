@@ -63,10 +63,11 @@ chord = 'CM' # C major chord
 note_abstract_melody_notation = amp.parse_musical_note(note_std_notation, chord) # from std note notation to abstract note notation
 ```
 
-The notes in standard notation are uppercase letters, and a sharp symbol can be present (diesis are not used)
+The notes in standard notation are uppercase letters, and a sharp symbol can be present (an alternative version with flats is also present).
 
 ```python
 musical_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+musical_notes_b = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 ```
 
 To modify the particular tones (chord or color tones) of a chord or to add a new one, the chord_tones dictionary, inside the chord.py script can be edited.
@@ -134,5 +135,5 @@ rhythm = amp.parse_rhythm(midi_queue, durations)
 
 The resulting lists can than be merged in a single one.
 ```python
-full_melody = [x+y for x in abstract_melody for y in rhythm]
+full_melody = [x+y for (x, y) in zip(abstract_melody, rhythm)]
 ```
