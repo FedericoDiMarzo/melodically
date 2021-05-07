@@ -28,7 +28,8 @@ note_queue.clean_unclosed_note_ons()
 Some other methods are exposed for extra flexibility.
 ```python
 msg = note_queue.pop() # gets the oldest note message removing it from the queue
-list_of_msg = note_queue.getContainer() # to deal directly with the data container
+list_of_msg = note_queue.get_container() # to deal directly with the data container
+musical_notes = note_queue.get_notes() # to obtain a list of notes in std notation
 note_queue.clear() # clears the queue
 ```
 
