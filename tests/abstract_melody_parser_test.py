@@ -1,7 +1,7 @@
 import unittest
-from src.abstract_melody_parser.melody import parse_midi_note, parse_musical_note
-from src.abstract_melody_parser.rhythm import get_durations, get_nearest_rhythm, parse_rhythm
-from src.abstract_melody_parser import MidiNoteQueue
+from abstract_melody_parser.melody import parse_midi_note, parse_musical_note
+from abstract_melody_parser.rhythm import get_durations, get_nearest_rhythm, parse_rhythm
+from abstract_melody_parser import MidiNoteQueue
 from mocks import midi_note_queue_mock_1, midi_note_queue_mock_2, \
     midi_note_queue_mock_3, midi_note_queue_1, midi_note_queue_2
 
@@ -21,9 +21,6 @@ class TestParseMidiNote(unittest.TestCase):
 
 
 class TestParseMusicalNote(unittest.TestCase):
-    def test_R_CM(self):
-        self.assertEqual(parse_musical_note('R', 'CM'), 'r')
-
     def test_E_CM(self):
         self.assertEqual(parse_musical_note('E', 'CM'), 'c')
 

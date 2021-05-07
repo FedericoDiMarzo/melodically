@@ -1,21 +1,3 @@
-import time
-
-
-def get_timestamp_msg(midi_msg_type, midi_note_value):
-    """
-    Function that given a note_on/off midi message returns a dictionary
-    that encapsule the message with a timestamp, that can be used to determine
-    the duration between a note_on and note_off message.
-
-    :param midi_msg_type: note_on or note_off
-    :param midi_note_value: midi note number
-    :return: dictionary containing the midi message and a timestamp
-    """
-    return {
-        'type': midi_msg_type,
-        'note': midi_note_value,
-        'timestamp': time.time()
-    }
 
 
 def get_durations(bpm):

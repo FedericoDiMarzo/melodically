@@ -1,4 +1,4 @@
-from src.abstract_melody_parser import MidiNoteQueue
+from abstract_melody_parser import MidiNoteQueue
 
 # used to test the MidiQueue class
 midi_note_queue_mock_1 = [
