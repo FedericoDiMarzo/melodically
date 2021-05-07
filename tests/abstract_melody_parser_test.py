@@ -80,6 +80,13 @@ class TestMidiNoteQueue(unittest.TestCase):
         midi_queue.clear()
         self.assertEqual([], midi_queue.get_container())
 
+    def test_get_notes(self):
+        midi_queue = MidiNoteQueue()
+        for msg in midi_note_queue_mock_2:
+            midi_queue.push(msg)
+        midi_queue.clean_unclosed_note_ons()
+        self.assertEqual(['A#'], midi_queue.get_notes())
+
 
 class TestGetNearestRhythm(unittest.TestCase):
     def setUp(self):
