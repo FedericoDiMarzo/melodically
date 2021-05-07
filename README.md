@@ -52,8 +52,9 @@ An abstract melody can be realized in a particular chord; in order to obtain the
 
 midi_msg = note_queue.pop() # getting a midi message
 note_midi = midi_msg['note'] # getting the midi note number
-note_std_notation = abs.melody.parse_midi_note(note_midi) # from midi note number to std note notation
-note_abstract_melody_notation = abs.melody.parse_musical_note(note_std_notation, 'CM') # from std note notation to abstract note notation
+note_std_notation = amp.parse_midi_note(note_midi) # from midi note number to std note notation
+chord = 'CM' # C major chord
+note_abstract_melody_notation = amp.parse_musical_note(note_std_notation, chord) # from std note notation to abstract note notation
 ```
 
 The notes in standard notation are uppercase letters, and a sharp symbol can be present (diesis are not used)
@@ -95,14 +96,14 @@ To define a rhythmic frame for the analysis, a duration dictionary must be creat
 
 ```python
 bpm = 120.5
-durations = abs.rhythm.get_durations(bpm)
+durations = amp.get_durations(bpm)
 ```
 
 After defining the durations from the bpm, the parsing can follow. It will return a list of symbols for all the notes in the melody.
 
 ```python
 noteQueue.clean_unclosed_note_ons() # always do that before parsing
-rhythmic_symbols = abs.rhythm.parse_rhythm(note_queue, durations)
+rhythmic_symbols = amp.parse_rhythm(note_queue, durations)
 ```
 
 ## Putting all together
@@ -112,16 +113,16 @@ Sometimes the informative content of a melody can only be found in the rhythm or
 ```python
 current_chord = 'Dm'
 bpm = 125
-durations = abs.rhythm.get_durations(bpm)
+durations = amp.get_durations(bpm)
 
 noteQueue.clean_unclosed_note_ons() # again, don't forget to clean the unclosed note_on messages
 notes = midi_queue.get_notes()
 
 # list comprehension to map the std notes to an abstract melody
-abstract_melody = [amp.melody.parse_musical_note(note, current_chord) for note in notes]
+abstract_melody = [amp.parse_musical_note(note, current_chord) for note in notes]
 
 # getting the rhythm too
-rhythm = amp.rhythm.parse_rhythm(midi_queue, durations)
+rhythm = amp.parse_rhythm(midi_queue, durations)
 
 ```
 
