@@ -8,6 +8,11 @@ The position of each notes in the list reflects the midi ordering.
 """
 musical_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
+"""
+Musical notes with the flat notation
+"""
+musical_notes_b = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+
 
 def parse_midi_note(midi_note):
     """
@@ -17,6 +22,22 @@ def parse_midi_note(midi_note):
     :return: musical note
     """
     return musical_notes[midi_note % 12]
+
+
+# TODO: test this function
+def musical_note_to_midi(musical_note, octave=-1):
+    """
+    Convert a musical note into a midi note.
+
+    :param musical_note: musical note symbol
+    :param octave: octave of the note
+    :return: midi note number
+    """
+    octave_offset = (octave + 1) * 12
+    if musical_note in musical_notes:
+        return musical_notes.index(musical_note) + octave_offset
+    else:
+        return musical_notes_b.index(musical_note) + octave_offset
 
 
 def parse_musical_note(musical_note, chord):
