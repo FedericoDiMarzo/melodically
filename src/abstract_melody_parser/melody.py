@@ -28,8 +28,6 @@ def parse_musical_note(musical_note, chord):
     :param chord: chord notation
     :return: abstract melody_parser note
     """
-    if musical_note == 'R':  # TODO: maybe remove the rests from the melody parser
-        return 'r'
     if musical_note in chord_tones[chord]['c']:
         return 'c'
     elif musical_note in chord_tones[chord]['l']:
