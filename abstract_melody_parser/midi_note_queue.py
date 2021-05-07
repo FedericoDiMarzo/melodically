@@ -1,4 +1,5 @@
 import time
+from melody import parse_midi_note
 
 
 class MidiNoteQueue:
@@ -54,11 +55,22 @@ class MidiNoteQueue:
 
     def get_container(self):
         """
-        Getter for the container used for the queue
+        Getter for the container used for the queue.
 
         :return: list of midi messages with timestamp
         """
         return self._container
+
+    def get_notes(self):
+        """
+        Gets a list of notes in standard notation from the note on messages.
+        :return: list of notes in standard notation
+        """
+        notes = []
+        for msg in self._container:
+            if msg['type'] == 'note_on':
+                notes.append(parse_midi_note(msg['note']))
+        return notes
 
     def clean_unclosed_note_ons(self):
         """
