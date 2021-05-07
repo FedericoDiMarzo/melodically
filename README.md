@@ -53,7 +53,8 @@ An abstract melody can be realized in a particular chord; in order to obtain the
 midi_msg = note_queue.pop() # getting a midi message
 note_midi = midi_msg['note'] # getting the midi note number
 note_std_notation = abs.melody.parse_midi_note(note_midi) # from midi note number to std note notation
-note_abstract_melody_notation = abs.melody.parse_musical_note(note_std_notation, 'CM') # from std note notation to abstract note notation
+chord = 'CM' # C major chord
+note_abstract_melody_notation = abs.melody.parse_musical_note(note_std_notation, chord) # from std note notation to abstract note notation
 ```
 
 The notes in standard notation are uppercase letters, and a sharp symbol can be present (diesis are not used)
