@@ -14,22 +14,22 @@ In order to insert a new note message with a timestamp included, the get_timesta
 ```python
 import abstract_melody_parser as amp
 
-noteQueue = amp.MidiNoteQueue()
-noteQueue.push(amp.get_timestamp_msg('note_on', 47))
+note_queue = amp.MidiNoteQueue()
+note_queue.push(amp.get_timestamp_msg('note_on', 47))
 # some temporal delay...
-noteQueue.push(amp.get_timestamp_msg('note_off', 47))
+note_queue.push(amp.get_timestamp_msg('note_off', 47))
 ```
 
 Before parsing a midi queue, it's suggested to clean the note_on messages that are still missing the relative note_off message.
 ```python
-noteQueue.clean_unclosed_note_ons()
+note_queue.clean_unclosed_note_ons()
 ```
 
 Some other methods are exposed for extra flexibility.
 ```python
-msg = noteQueue.pop() # gets the oldest note message removing it from the queue
-list_of_msg = noteQueue.getContainer() # to deal directly with the data container
-noteQueue.clear() # clears the queue
+msg = note_queue.pop() # gets the oldest note message removing it from the queue
+list_of_msg = note_queue.getContainer() # to deal directly with the data container
+note_queue.clear() # clears the queue
 ```
 
 The use of the MidiQueue for the melodic and rhythic parsing will be explained in the following sections.
@@ -49,10 +49,10 @@ An abstract melody can be realized in a particular chord; in order to obtain the
 
 ```python
 
-midi_msg = midiQueue.pop()
-note_midi = midi_msg['note']
-note_std_notation = abs.melody.parse_midi_note(note_midi)
-note_abstract_melody_notation = abs.melody.parse_musical_note(note_std_notation, 'CM')
+midi_msg = note_queue.pop() # getting a midi message
+note_midi = midi_msg['note'] # getting the midi note number
+note_std_notation = abs.melody.parse_midi_note(note_midi) # from midi note number to std note notation
+note_abstract_melody_notation = abs.melody.parse_musical_note(note_std_notation, 'CM') # from std note notation to abstract note notation
 ```
 
 The notes in standard notation are uppercase letters, and a sharp symbol can be present (diesis are not used)
@@ -95,4 +95,11 @@ To define a rhythmic frame for the analysis, a duration dictionary must be creat
 ```python
 bpm = 120.5
 durations = abs.rhythm.get_durations(bpm)
+```
+
+After defining the durations from the bpm, the parsing can follow. It will return a list of symbols for all the notes in the melody.
+
+```python
+noteQueue.clean_unclosed_note_ons()
+rhythmic_symbols = abs.rhythm.parse_rhythm(note_queue, durations)
 ```
