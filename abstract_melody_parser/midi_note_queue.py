@@ -1,5 +1,5 @@
 import time
-from melody import parse_midi_note
+from abstract_melody_parser.melody import parse_midi_note
 
 
 class MidiNoteQueue:
@@ -34,6 +34,7 @@ class MidiNoteQueue:
         if midi_msg['type'] == 'note_on':  # note_on case
             # checking if the pushed note_on is too close with the last one
             if midi_msg['timestamp'] - self._last_timestamp > self._minimum_interval:
+                self._last_timestamp = midi_msg['timestamp']
                 self._open_note_on_list.append(midi_msg['note'])
                 self._container.append(midi_msg)
 
@@ -82,7 +83,7 @@ class MidiNoteQueue:
             while not (self._container[index]['type'] == 'note_on' and self._container[index]['note'] == open_note):
                 index = index - 1
             del self._container[index]  # removing the open note_on message
-            self._open_note_on_list.remove(open_note)  # removing the open note reference
+        self._open_note_on_list.clear()  # removing the open note references
 
     def clear(self):
         """
