@@ -6,6 +6,12 @@ The developement of this project started with the idea of creating a parsing sof
 
 The output symbols of the parsing are based on the Impro-Visor software notation (https://www.cs.hmc.edu/~keller/jazz/improvisor/) and the theory supporting it can be found at this link https://www.cs.hmc.edu/~keller/jazz/improvisor/papers.html .
 
+## Installation
+The package can easily be installed using the pip package manager.
+```shell
+pip install abstract_melody_parser
+```
+
 ## MidiQueue
 To parse note_on/note_off messages, a particular data structure called MidiQueue is used. This queue stores midi note messages with a timestamp, that is needed to parse the rhythmic structure of a melody. This data structure is supposed to collect only melodies, chords are not supported, if multiple note_on messages are pushed into it with timestamps too close with each other, only the first one will be mantained.
 
