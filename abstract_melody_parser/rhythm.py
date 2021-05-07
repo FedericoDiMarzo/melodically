@@ -1,5 +1,3 @@
-
-
 def get_durations(bpm):
     """
     Function that generate a dictionary containing
