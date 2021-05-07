@@ -1,4 +1,4 @@
-from abstract_melody_parser.chords import chord_tones
+from src.abstract_melody_parser.chords import chord_tones
 
 """
 Musical notes.

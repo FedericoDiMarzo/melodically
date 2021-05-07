@@ -19,7 +19,8 @@ x: random tone
 An abstract melody can be realized in a particular chord; in order to obtain the correct abstract melody symbol, is necessary to input both a note in standard notation, and a chord. To obtain a note in standard notation from a midi note value, an additional parsing function is needed.
 
 ```python
-import abstract_melody_parser.melody_parser as mp
+import src.abstract_melody_parser.melody as mp
+
 note_midi = 48
 note_std_notation = mp.parse_midi_note(note_midi)
 note_abstract_melody_notation = mp.parse_musical_note(note_std_notation, 'CM')

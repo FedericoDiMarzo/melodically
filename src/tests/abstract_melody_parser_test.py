@@ -1,7 +1,9 @@
 import unittest
-from abstract_melody_parser.melody_parser import parse_midi_note, parse_musical_note
-from abstract_melody_parser.rhythmic_parser import get_durations, get_nearest_rhythm, MidiNoteQueue, parse_rhythm
-from mocks import midi_note_queue_mock_1, midi_note_queue_mock_2, midi_note_queue_mock_3, midi_note_queue_1, midi_note_queue_2
+from src.abstract_melody_parser.melody import parse_midi_note, parse_musical_note
+from src.abstract_melody_parser.rhythm import get_durations, get_nearest_rhythm, parse_rhythm
+from src.abstract_melody_parser import MidiNoteQueue
+from mocks import midi_note_queue_mock_1, midi_note_queue_mock_2, \
+    midi_note_queue_mock_3, midi_note_queue_1, midi_note_queue_2
 
 
 class TestParseMidiNote(unittest.TestCase):
