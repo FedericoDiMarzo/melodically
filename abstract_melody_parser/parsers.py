@@ -21,14 +21,30 @@ def parse_musical_note(musical_note, chord):
 
 def parse_rhythm(midi_queue, rhythmical_durations):
     """
-    # TODO: description
+    Given a MidiNoteQueue object and a rhytmical_duration dictionary,
+    parses the note messages contained into the MidiNoteQueue into
+    a list of the following symbols, based on the durations of the various
+    notes and rests.
 
-    :param midi_queue:
-    :param rhythmical_durations:
-    :return:
+    ============================
+    1: whole note
+    2: half note
+    4: quarter note
+    4dot: quarter note dotted
+    4t: quarter note triplet
+    8: eight note
+    8t: eight note triplet
+    16: sixteenth note
+    16t: sixteenth note triplet
+    ============================
+
+    :param midi_queue: MidiNoteQueue object
+    :param rhythmical_durations: dictionary of harmonic durations
+    :return: list of symbols
     """
     # TODO: parse the rests too?
     result = []  # this list will contain the rhythmical symbols
+    midi_queue.clean_unclosed_note_ons()
     midi_queue_container = midi_queue.get_container()
     for i in range(len(midi_queue_container)):
         if midi_queue_container[i]['type'] == 'note_on':
