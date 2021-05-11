@@ -1,4 +1,4 @@
-from abstract_melody_parser.harmony import midi_to_std, get_root, harmonic_affinities, modes_dict
+from melodically.harmony import midi_to_std, get_root, harmonic_affinities, modes_dict
 
 
 class HarmonicState:

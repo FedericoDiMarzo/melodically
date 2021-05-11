@@ -1,5 +1,5 @@
-from abstract_melody_parser.rhythm import get_nearest_rhythm
-from abstract_melody_parser.chords import chord_tones
+from melodically.rhythm import get_nearest_rhythm
+from melodically.chords import chord_tones
 
 
 def parse_musical_note(musical_note, chord):

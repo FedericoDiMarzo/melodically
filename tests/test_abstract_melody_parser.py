@@ -1,5 +1,5 @@
 import unittest
-from abstract_melody_parser import *
+from melodically import *
 from mocks import *
 
 

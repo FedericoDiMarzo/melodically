@@ -1,4 +1,4 @@
-from abstract_melody_parser.harmony import musical_notes, std_to_midi, midi_to_std, mode_signatures
+from melodically.harmony import musical_notes, std_to_midi, midi_to_std, mode_signatures
 import numpy as np
 
 """

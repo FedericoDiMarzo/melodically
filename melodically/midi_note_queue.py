@@ -1,5 +1,5 @@
 import time
-from abstract_melody_parser.harmony import midi_to_std
+from melodically.harmony import midi_to_std
 
 
 class MidiNoteQueue:
