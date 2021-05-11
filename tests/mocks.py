@@ -180,13 +180,13 @@ midi_note_queue_mock_4 = [
     # quarter note
     {
         'type': 'note_on',
-        'note': 75,
+        'note': 76,
         'timestamp': 8
     },
 
     {
         'type': 'note_off',
-        'note': 75,
+        'note': 76,
         'timestamp': 9 + 0.02
     },
 ]
