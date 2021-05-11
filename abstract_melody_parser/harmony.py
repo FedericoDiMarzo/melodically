@@ -35,7 +35,6 @@ def midi_to_std(midi_note):
     return musical_notes[midi_note % 12]
 
 
-# TODO: test this function
 def std_to_midi(musical_note, octave=-1):
     """
     Convert a musical note into a midi note.
@@ -90,23 +89,38 @@ modes_dict = {root: get_all_modes(root) for root in musical_notes}
 
 
 def harmonic_affinities(root, notes_std):
-    # returns a multi dim list of size (len(mode_signatures), 7)
-    # TODO: comment this function
+    """
+    Given a root and a set of notes, returns a multidimensional list of the
+    size of the value of the modes_dict using the root as a key, that has as elements
+    the result of a distance function applied to the various notes of each modal scale.
+
+    :param root: root note in std notation
+    :param notes_std: list of target notes in std notation
+    :return: multidimensional list containing harmonic distances between notes_std and the modes of root
+    """
+
+    # affinity points used for each degree of a modal scale
     positive_weights = [1, 0.5, 3, 0.2, 0.4, 2, 0.1]
+
+    # affinity points subtracted from the notes out of scale
     negative_weight = 2
+
+    # counting the occurrences of the input notes
     counter = Counter(notes_std)
+
+    # bulting the multidimensional affinity list
     affinities = []
-    for i in range(len(mode_signatures)):
+    for i in range(len(mode_signatures)):  # for each mode signature (interval structure)
         affinities.append([])
-        for j in range(7):  # TODO: adapt to scale length
+        for j in range(7):  # TODO: adapt to scale length?
             curr_mode = modes_dict[root][i][j]  # list of 7 notes
-            aff = 0
+            aff = 0  # initializing the affinity
             for k in range(7):
                 # calculating the positive weights
                 aff = aff + counter[curr_mode[k]] * positive_weights[k]
             not_in_the_mode = [note for note in notes_std if note not in curr_mode]
             aff = aff - len(not_in_the_mode) * negative_weight
-            aff = aff / len(notes_std)
+            aff = aff / len(notes_std)  # normalizing
             affinities[i].append(aff)
 
     return affinities
