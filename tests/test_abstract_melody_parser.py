@@ -137,10 +137,22 @@ class TestParseRhythm(unittest.TestCase):
 
     def test_1(self):
         self.midi_queue.clear()
-        for msg in midi_note_queue_mock_4:
-            self.midi_queue.push(msg)
+        for note_msg in midi_note_queue_mock_4:
+            self.midi_queue.push(note_msg)
         result = parse_rhythm(self.midi_queue, self.durations)
         self.assertEqual(['1', '16', 'r16', '4'], result)
+
+
+class TestParseMelody(unittest.TestCase):
+    def setUp(self):
+        self.durations = get_durations(60)
+        self.midi_queue = MidiNoteQueue()
+        for note_msg in midi_note_queue_mock_4:
+            self.midi_queue.push(note_msg)
+
+    def test_0(self):
+        result = parse_melody(self.midi_queue, 'CM', self.durations)
+        self.assertEqual(['l1', 'c16', 'r16', 'c4'], result)
 
 
 class TestHarmonicState(unittest.TestCase):
