@@ -1,37 +1,34 @@
 import unittest
-from abstract_melody_parser.melody import parse_midi_note, musical_note_to_midi, parse_musical_note
-from abstract_melody_parser.rhythm import get_durations, get_nearest_rhythm, parse_rhythm
-from abstract_melody_parser import MidiNoteQueue
-from mocks import midi_note_queue_mock_1, midi_note_queue_mock_2, \
-    midi_note_queue_mock_3, midi_note_queue_1, midi_note_queue_2
+from abstract_melody_parser import *
+from mocks import *
 
 
-class TestParseMidiNote(unittest.TestCase):
+class TestParseMidiToStd(unittest.TestCase):
     def test_f_minus_1(self):
-        self.assertEqual(parse_midi_note(5), 'F')
+        self.assertEqual(midi_to_std(5), 'F')
 
     def test_d1(self):
-        self.assertEqual(parse_midi_note(26), 'D')
+        self.assertEqual(midi_to_std(26), 'D')
 
     def test_c4(self):
-        self.assertEqual(parse_midi_note(60), 'C')
+        self.assertEqual(midi_to_std(60), 'C')
 
     def test_f_diesis_9(self):
-        self.assertEqual(parse_midi_note(126), 'F#')
+        self.assertEqual(midi_to_std(126), 'F#')
 
 
-class TestMusicalNoteToMidi(unittest.TestCase):
+class TestStdToMidi(unittest.TestCase):
     def test_A_diesis(self):
-        self.assertEqual(10, musical_note_to_midi('A#'))
+        self.assertEqual(10, std_to_midi('A#'))
 
     def test_Ab(self):
-        self.assertEqual(8, musical_note_to_midi('Ab'))
+        self.assertEqual(8, std_to_midi('Ab'))
 
     def test_C_diesis4(self):
-        self.assertEqual(61, musical_note_to_midi('C#', 4))
+        self.assertEqual(61, std_to_midi('C#', 4))
 
     def test_Gb0(self):
-        self.assertEqual(18, musical_note_to_midi('Gb', 0))
+        self.assertEqual(18, std_to_midi('Gb', 0))
 
 
 class TestParseMusicalNote(unittest.TestCase):
