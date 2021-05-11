@@ -101,7 +101,6 @@ At the moment only few families of chords are supported
 CM: major
 Cm: minor
 C7: dominant
-
 ```
 
 Example on how to extract the lists of chord/color tones
