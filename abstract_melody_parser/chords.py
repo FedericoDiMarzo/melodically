@@ -1,4 +1,4 @@
-from harmony import musical_notes, std_to_midi, midi_to_std, mode_signatures
+from abstract_melody_parser.harmony import musical_notes, std_to_midi, midi_to_std, mode_signatures
 import numpy as np
 
 """
@@ -59,6 +59,6 @@ def get_chord_tones(chord_dict):
     return chord_dict
 
 
-# adding major and minor chords to the dictionary
+# adding major, minor and dominant chords to the dictionary
 # TODO: check
 chord_tones = get_chord_tones(chord_tones)
