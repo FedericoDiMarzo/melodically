@@ -1,15 +1,15 @@
 ## Introduction
 
-This python module is designed to offer a collection of functions and classes that can be used to give a meaningful interpretation of a succession of midi note messages, in terms of rhythm and melody.
+This python module is designed to offer a collection of functions, classes and data structures that can be used to represent notes, rhythmic figures and melodies. Various parser are available to give a meaningful interpretation of a succession of midi note messages, together with a tool to monitor the evolution of an harmonic state of a musical performance.
 
-The developement of this project started with the idea of creating a parsing software that could be used to output rhythmic and melodic symbols, that could be further processed by some machine learning algorithm (based on Markov models, grammars or similar techniques).
+The developement of this project started with the main idea of offering a series of useful tools that can be used to track external midi note messages that form melodies, generating sequences and harmonic information, that could be further processed by some machine learning algorithm (based on Markov models, grammars or similar techniques).
 
 The output symbols of the parsing are based on the Impro-Visor software notation (https://www.cs.hmc.edu/~keller/jazz/improvisor/) and the theory supporting it can be found at this link https://www.cs.hmc.edu/~keller/jazz/improvisor/papers.html .
 
 ## Installation
 The package can easily be installed using the pip package manager.
 ```shell
-pip install abstract_melody_parser
+pip install melodically
 ```
 
 ## MidiQueue
@@ -18,12 +18,12 @@ To parse note_on/note_off messages, a particular data structure called MidiQueue
 In order to insert a new note message with a timestamp included, the get_timestamp_message function must be used.
 
 ```python
-import abstract_melody_parser as amp
+import melodically as m
 
-note_queue = amp.MidiNoteQueue()
-note_queue.push(amp.get_timestamp_msg('note_on', 47))
+note_queue = m.MidiNoteQueue()
+note_queue.push(m.get_timestamp_msg('note_on', 47))
 # some temporal delay...
-note_queue.push(amp.get_timestamp_msg('note_off', 47))
+note_queue.push(m.get_timestamp_msg('note_off', 47))
 ```
 
 Before parsing a midi queue, it's suggested to clean the note_on messages that are still missing the relative note_off message.
@@ -36,6 +36,7 @@ Some other methods are exposed for extra flexibility.
 msg = note_queue.pop() # gets the oldest note message removing it from the queue
 list_of_msg = note_queue.get_container() # to deal directly with the data container
 musical_notes = note_queue.get_notes() # to obtain a list of notes in std notation
+note_queue.clean_unclosed_note_ons() # removes note_on messages that don't have a corrisponding note_off
 note_queue.clear() # clears the queue
 ```
 
