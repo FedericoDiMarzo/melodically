@@ -31,7 +31,7 @@ class HarmonicState:
         while len(self.noteBuffer) > self.bufferSize:
             self.noteBuffer.pop(0)  # removing old notes
 
-    def change_mode(self):
+    def update_scale(self):
         """
         Updates the currentMode attribute based on the notes in the buffer,
         applying the harmonic_affinities function to them.
@@ -57,7 +57,7 @@ class HarmonicState:
 
         :return: list of notes of the current modal scale
         """
-        self.change_mode()
+        self.update_scale()
         tmp = modes_dict[self.currentMode['root']]
         tmp = tmp[self.currentMode['mode_signature_index']]
         return tmp[self.currentMode['mode_index']]
