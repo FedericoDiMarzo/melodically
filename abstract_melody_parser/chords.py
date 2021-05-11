@@ -10,8 +10,6 @@ chord_tones = {}
 
 
 def get_chord_tones(chord_dict):
-    # TODO: test
-    # TODO: add minor and dominant chords
     """
     Adds all the major (XM) / minor (Xm) / dominant (X7)
     chords to the chord dictionary.
