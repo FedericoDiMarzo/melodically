@@ -81,9 +81,9 @@ An abstract melody can be realized in a particular chord; in order to obtain the
 ```python
 midi_msg = note_queue.pop() # getting a midi message
 note_midi = midi_msg['note'] # getting the midi note number
-note_std_notation = amp.parse_midi_note(note_midi) # from midi note number to std note notation
+note = 'G'
 chord = 'CM' # C major chord
-note_abstract_melody_notation = amp.parse_musical_note(note_std_notation, chord) # from std note notation to abstract note notation
+abstract_note = m.parse_musical_note(note, chord) # from std note notation to abstract note notation
 ```
 
 The notes in standard notation are uppercase letters, and a sharp symbol can be present (an alternative version with flats is also present).
@@ -127,7 +127,7 @@ The rhythmic parsing process, allows to translate a series of notes composing a 
 16: sixteenth note
 16t: sixteenth note triplet
 
-the rests are indicated with an "r" suffix
+the rests are indicated with an "r" prefix
 ex: r4 (quarter note rest)
 ```
 
