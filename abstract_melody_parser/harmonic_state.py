@@ -1,7 +1,6 @@
 from abstract_melody_parser.harmony import midi_to_std, get_root, harmonic_affinities, modes_dict
 
 
-# TODO: comments
 class HarmonicState:
     """
     This class allows to monitor and update an internal harmonic state,
@@ -9,7 +8,6 @@ class HarmonicState:
     """
 
     def __init__(self, buffer_size=16):
-
         # contains the input notes in std notation
         self.noteBuffer = []
 
