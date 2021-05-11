@@ -17,7 +17,7 @@ musical_notes_b = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', '
 """
 this data structure contains all the
 possible semitone sequences to construct
-many families of modes
+many families of modal scales
 """
 mode_signatures = [
     [2, 2, 1, 2, 2, 2, 1],  # TTSTTTS
@@ -89,25 +89,24 @@ the respective modes as value
 modes_dict = {root: get_all_modes(root) for root in musical_notes}
 
 
-def harmonic_affinities(modes, notes_std):
-    # returns a multi dim list of size (len(mode_signatures),7)
+def harmonic_affinities(root, notes_std):
+    # returns a multi dim list of size (len(mode_signatures), 7)
     # TODO: comment this function
-    positive_weights = [0.3, 0.06, 0.08, 0.08, 0.24, 0.16, 0.08]
-    negative_weight = 0.2
-    input_notes_len = len(notes_std)
+    positive_weights = [1, 0.5, 3, 0.2, 0.4, 2, 0.1]
+    negative_weight = 2
     counter = Counter(notes_std)
     affinities = []
     for i in range(len(mode_signatures)):
         affinities.append([])
-        for j in range(7):
-            curr_mode = modes[i][j]  # list of 7 notes
+        for j in range(7):  # TODO: adapt to scale length
+            curr_mode = modes_dict[root][i][j]  # list of 7 notes
             aff = 0
             for k in range(7):
                 # calculating the positive weights
                 aff = aff + counter[curr_mode[k]] * positive_weights[k]
             not_in_the_mode = [note for note in notes_std if note not in curr_mode]
             aff = aff - len(not_in_the_mode) * negative_weight
-            aff = aff / input_notes_len
+            aff = aff / len(notes_std)
             affinities[i].append(aff)
 
     return affinities
