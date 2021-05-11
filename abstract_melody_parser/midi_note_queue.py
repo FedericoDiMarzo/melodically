@@ -1,5 +1,5 @@
 import time
-from abstract_melody_parser.melody import parse_midi_note
+from abstract_melody_parser.harmony import midi_to_std
 
 
 class MidiNoteQueue:
@@ -14,13 +14,13 @@ class MidiNoteQueue:
         self._container = []
 
         # timestamp of the last note_on message
-        self._last_timestamp = 0
+        self._lastTimestamp = 0
 
         # list of midi values of the note_on messages that are not closed yet
-        self._open_note_on_list = []
+        self._openNoteOnList = []
 
         # threshold in seconds to discard notes that are too close
-        self._minimum_interval = 0.06
+        self._minimumInterval = 0.06
 
     def push(self, midi_msg):
         """
@@ -33,15 +33,15 @@ class MidiNoteQueue:
 
         if midi_msg['type'] == 'note_on':  # note_on case
             # checking if the pushed note_on is too close with the last one
-            if midi_msg['timestamp'] - self._last_timestamp > self._minimum_interval:
-                self._last_timestamp = midi_msg['timestamp']
-                self._open_note_on_list.append(midi_msg['note'])
+            if midi_msg['timestamp'] - self._lastTimestamp > self._minimumInterval:
+                self._lastTimestamp = midi_msg['timestamp']
+                self._openNoteOnList.append(midi_msg['note'])
                 self._container.append(midi_msg)
 
         elif midi_msg['type'] == 'note_off':  # note_off case
             # checking if the note_off closes a note on
-            if midi_msg['note'] in self._open_note_on_list:
-                self._open_note_on_list.remove(midi_msg['note'])
+            if midi_msg['note'] in self._openNoteOnList:
+                self._openNoteOnList.remove(midi_msg['note'])
                 self._container.append(midi_msg)
 
         # all other types of midi messages are excluded automatically
@@ -70,28 +70,28 @@ class MidiNoteQueue:
         notes = []
         for msg in self._container:
             if msg['type'] == 'note_on':
-                notes.append(parse_midi_note(msg['note']))
+                notes.append(midi_to_std(msg['note']))
         return notes
 
     def clean_unclosed_note_ons(self):
         """
         Removes from the queue the unclosed note_on messages.
         """
-        for open_note in self._open_note_on_list:
+        for open_note in self._openNoteOnList:
             index = len(self._container) - 1  # the index the we're checking
             # searching for the most recent note_on with note == open_note
             while not (self._container[index]['type'] == 'note_on' and self._container[index]['note'] == open_note):
                 index = index - 1
             del self._container[index]  # removing the open note_on message
-        self._open_note_on_list.clear()  # removing the open note references
+        self._openNoteOnList.clear()  # removing the open note references
 
     def clear(self):
         """
         Removes all the elements from the queue.
         """
         self._container.clear()
-        self._last_timestamp = 0
-        self._open_note_on_list = []
+        self._lastTimestamp = 0
+        self._openNoteOnList = []
 
 
 def get_timestamp_msg(midi_msg_type, midi_note_value):
