@@ -27,6 +27,7 @@ note_queue.push(m.get_timestamp_msg('note_off', 47))
 ```
 
 Some other methods are exposed for extra flexibility.
+
 ```python
 msg = note_queue.pop() # gets the oldest note message removing it from the queue
 list_of_msg = note_queue.get_container() # to deal directly with the data container
@@ -37,6 +38,33 @@ note_queue.clear() # clears the queue
 
 The use of the MidiQueue for the melodic and rhythic parsing will be explained in the following sections.
 
+## HarmonicState
+The HarmonicState class allows to track the harmonic relations of an input melody notes. 
+
+```python
+harmonic_state = m.HarmonicState(buffer_size=20)
+```
+
+The internal buffer is used to store input notes, in order to analyze them when it will be needed.
+
+```python
+doric_melody = ['C#', 'C#', 'D#', 'E', 'F#', 'G#', 'A#', 'B']
+harmonic_state.push_notes(doric_melody)
+```
+
+The HarmonicState can be sampled, to return the notes of the closest modal scale, depending on the notes in the input buffer. 
+
+```python
+current_scale = harmonic_state.get_mode_notes()
+```
+
+In order to compute the most affine scale, the notes in the input buffer are compared with a distance function to each possible sequence of notes that composes a modal scale. The modal scale that minimizes this distance is then chosen. 
+
+The state update can also be forced manually if needed.
+
+```python
+harmonic_state.update_scale()
+```
 
 ## Parsing single notes
 
