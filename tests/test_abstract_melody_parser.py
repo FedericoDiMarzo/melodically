@@ -3,6 +3,8 @@ from abstract_melody_parser import *
 from mocks import *
 
 
+# TODO: split the tests
+
 class TestParseMidiToStd(unittest.TestCase):
     def test_f_minus_1(self):
         self.assertEqual(midi_to_std(5), 'F')
@@ -131,7 +133,14 @@ class TestParseRhythm(unittest.TestCase):
 
     def test_0(self):
         result = parse_rhythm(self.midi_queue, self.durations)
-        self.assertEqual(['1', '16', '16', '4'], result)
+        self.assertEqual(['1', '16', '4'], result)
+
+    def test_1(self):
+        self.midi_queue.clear()
+        for msg in midi_note_queue_mock_4:
+            self.midi_queue.push(msg)
+        result = parse_rhythm(self.midi_queue, self.durations)
+        self.assertEqual(['1', '16', 'r16', '4'], result)
 
 
 class TestHarmonicState(unittest.TestCase):
