@@ -36,13 +36,15 @@ def parse_rhythm(midi_queue, rhythmical_durations):
     8t: eight note triplet
     16: sixteenth note
     16t: sixteenth note triplet
+
+    the rests are indicated with an "r" suffix
+    ex: r4 (quarter note rest)
     ============================
 
     :param midi_queue: MidiNoteQueue object
     :param rhythmical_durations: dictionary of harmonic durations
-    :return: list of symbols
+    :return: list of duration symbols
     """
-    # TODO: parse the rests too?
     result = []  # this list will contain the rhythmical symbols
     midi_queue.clean_unclosed_note_ons()
     midi_queue_container = midi_queue.get_container()
@@ -59,4 +61,14 @@ def parse_rhythm(midi_queue, rhythmical_durations):
             # getting the closest rhythmic figure and adding it to the result
             rhythm = get_nearest_rhythm(interval, rhythmical_durations)
             result.append(rhythm)
+
+            # computing also the rest
+            if i == j - 1 and j < len(midi_queue_container) - 1:
+                # no other note_ons between the current note_on and note_off
+                rest_interval = midi_queue_container[j+1]['timestamp'] - midi_queue_container[j]['timestamp']
+                if rest_interval >= 0.08:
+                    # rhythmic figure for the rest
+                    rest_rhythm = get_nearest_rhythm(interval, rhythmical_durations)
+                    result.append('r' + rest_rhythm)
+
     return result
