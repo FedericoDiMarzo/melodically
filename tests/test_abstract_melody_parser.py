@@ -134,5 +134,25 @@ class TestParseRhythm(unittest.TestCase):
         self.assertEqual(['1', '16', '16', '4'], result)
 
 
+class TestHarmonicState(unittest.TestCase):
+    def setUp(self):
+        self.hstate = HarmonicState(8)
+
+    def test_C_ionic(self):
+        notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C']
+        self.hstate.push_notes(notes)
+        self.assertEqual(modes_dict['C'][0][0], self.hstate.get_mode_notes())
+
+    def test_A_locrian(self):
+        notes = ['A', 'A#', 'C', 'D', 'D#', 'F', 'G', 'A']
+        self.hstate.push_notes(notes)
+        self.assertEqual(modes_dict['A'][0][6], self.hstate.get_mode_notes())
+
+    def test_A_eolian(self):
+        notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'A']
+        self.hstate.push_notes(notes)
+        self.assertEqual(modes_dict['A'][0][5], self.hstate.get_mode_notes())
+
+
 if __name__ == '__main__':
     unittest.main()
