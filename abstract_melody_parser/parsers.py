@@ -7,6 +7,14 @@ def parse_musical_note(musical_note, chord):
     Function that given a chord, parses a musical note
     into an abstract melody_parser notation.
 
+    ============================
+    MELODIC SYMBOLS
+    ============================
+    c: chord tone
+    l: color tone
+    x: random tone
+    ============================
+
     :param musical_note: standard note notation
     :param chord: chord notation
     :return: abstract melody_parser note
@@ -26,6 +34,8 @@ def parse_rhythm(midi_queue, rhythmical_durations):
     a list of the following symbols, based on the durations of the various
     notes and rests.
 
+    ============================
+    RHYTHMIC SYMBOLS
     ============================
     1: whole note
     2: half note
@@ -65,10 +75,26 @@ def parse_rhythm(midi_queue, rhythmical_durations):
             # computing also the rest
             if i == j - 1 and j < len(midi_queue_container) - 1:
                 # no other note_ons between the current note_on and note_off
-                rest_interval = midi_queue_container[j+1]['timestamp'] - midi_queue_container[j]['timestamp']
+                rest_interval = midi_queue_container[j + 1]['timestamp'] - midi_queue_container[j]['timestamp']
                 if rest_interval >= 0.08:
                     # rhythmic figure for the rest
                     rest_rhythm = get_nearest_rhythm(interval, rhythmical_durations)
                     result.append('r' + rest_rhythm)
+
+    return result
+
+
+def parse_melody(midi_queue, chord, rhythmical_durations):
+    rhythmic_symbols = parse_rhythm(midi_queue, rhythmical_durations)
+    notes = midi_queue.get_notes()
+    note_count = 0
+    result = []
+    for i in range(len(rhythmic_symbols)):
+        symbol = rhythmic_symbols[i]
+        if 'r' not in symbol:
+            # note detected
+            symbol = parse_musical_note(notes[note_count], chord) + symbol
+            note_count = note_count + 1
+        result.append(symbol)
 
     return result
