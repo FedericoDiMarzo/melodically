@@ -99,23 +99,22 @@ midi_note_queue_mock_2 = [
     },
 ]
 
-# used to test the parse_rhythm function
+# used to test rests for the parse_rhythm function
 # the bpm is supposed to be 60
-# correct output: ['1', '16', '16', '4']
-# TODO: add more notes and rests too
+# correct output: ['1', '16', '4']
 midi_note_queue_mock_3 = [
 
     # whole note
     {
         'type': 'note_on',
         'note': 65,
-        'timestamp': 1 - 0.003
+        'timestamp': 2 - 0.003
     },
 
     {
         'type': 'note_off',
         'note': 65,
-        'timestamp': 5 - 0.001
+        'timestamp': 6 - 0.001
     },
 
     # sixteenth note
@@ -131,18 +130,52 @@ midi_note_queue_mock_3 = [
         'timestamp': 6.25 + 0.001
     },
 
-    # sixteenth note
+    # quarter note
     {
         'type': 'note_on',
-        'note': 45,
-        'timestamp': 7
+        'note': 75,
+        'timestamp': 6.30
     },
 
     {
         'type': 'note_off',
-        'note': 45,
-        'timestamp': 7.25 + 0.001
+        'note': 75,
+        'timestamp': 7.30 + 0.02
     },
+]
+
+# used to test the parse_rhythm function
+# the bpm is supposed to be 60
+# correct output: ['1', '16', '16', '4']
+midi_note_queue_mock_4 = [
+
+    # whole note
+    {
+        'type': 'note_on',
+        'note': 65,
+        'timestamp': 2 - 0.003
+    },
+
+    {
+        'type': 'note_off',
+        'note': 65,
+        'timestamp': 6 - 0.001
+    },
+
+    # sixteenth note
+    {
+        'type': 'note_on',
+        'note': 55,
+        'timestamp': 6
+    },
+
+    {
+        'type': 'note_off',
+        'note': 55,
+        'timestamp': 6.25 + 0.001
+    },
+
+    # sixteenth note rest
 
     # quarter note
     {
