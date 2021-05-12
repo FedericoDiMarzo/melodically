@@ -156,7 +156,7 @@ The output symbols of a melodic parsing, are just a combination of the abstract 
 
 ``` python
 # example melody
-['c4', 'c4', 'x8', 'x8', 'r4', 'l2, r2, l1]
+['c4', 'c4', 'x8', 'x8', 'r4', 'l2', 'r2', 'l1']
 
 ```
 
