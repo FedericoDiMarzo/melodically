@@ -149,9 +149,6 @@ Sometimes the informative content of a melody can only be found in the rhythm or
 current_chord = 'Dm'
 bpm = 125
 durations = m.get_durations(bpm)
-
-notes = midi_queue.get_notes()
-
 full_melody = m.parse_melody(midi_queue, current_chord, durations)
 ```
 
