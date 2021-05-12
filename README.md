@@ -148,11 +148,11 @@ Sometimes the informative content of a melody can only be found in the rhythm or
 ```python
 current_chord = 'Dm'
 bpm = 125
-durations = amp.get_durations(bpm)
+durations = m.get_durations(bpm)
 
 notes = midi_queue.get_notes()
 
-full_melody = parse_melody(midi_queue, current_chord, durations)
+full_melody = m.parse_melody(midi_queue, current_chord, durations)
 ```
 
 The output symbols of a melodic parsing, are just a combination of the abstract note symbols and the rhythmic symbols.
