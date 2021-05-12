@@ -63,6 +63,7 @@ chord_tones = get_chord_tones(chord_tones)
 
 
 def chord_to_midi(chord, octave=3):
+    # TODO: README update
     """
     Given a certain chord, it returns a list with the midi values
     of its notes. An octave parameter can be specified as a integer
@@ -74,9 +75,9 @@ def chord_to_midi(chord, octave=3):
     :param octave: octave of all the notes or of the single notes in case a list is passed
     :return: a list of midi note values of the chord tones of the chord
     """
-    notes = chord_tones[chord]
+    notes = chord_tones[chord]['c']
     if isinstance(octave, list):  # if octave is a list contains multiple values for each note
-        midi_notes = [std_to_midi(n, o) for (n, o) in (notes, octave)]
+        midi_notes = [std_to_midi(n, o) for n, o in zip(notes, octave)]
     else:
         midi_notes = [std_to_midi(n, octave) for n in notes]
     return midi_notes
