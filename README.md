@@ -79,8 +79,6 @@ x: random tone
 An abstract melody can be realized in a particular chord; in order to obtain the correct abstract melody symbol, is necessary to input both a note in standard notation, and a chord. To obtain a note in standard notation from a midi note value, an additional parsing function is needed.
 
 ```python
-midi_msg = note_queue.pop() # getting a midi message
-note_midi = midi_msg['note'] # getting the midi note number
 note = 'G'
 chord = 'CM' # C major chord
 abstract_note = m.parse_musical_note(note, chord) # from std note notation to abstract note notation
