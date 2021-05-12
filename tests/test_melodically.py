@@ -3,8 +3,6 @@ from melodically import *
 from mocks import *
 
 
-# TODO: split the tests
-
 class TestParseMidiToStd(unittest.TestCase):
     def test_f_minus_1(self):
         self.assertEqual(midi_to_std(5), 'F')
@@ -31,6 +29,17 @@ class TestStdToMidi(unittest.TestCase):
 
     def test_Gb0(self):
         self.assertEqual(18, std_to_midi('Gb', 0))
+
+
+class TestChordToMidi(unittest.TestCase):
+    def test_C7_oct5(self):
+        self.assertEqual([72, 76, 79, 82], chord_to_midi('C7', 5))
+
+    def test_A_diesis_m_oct123(self):
+        self.assertEqual([34, 37, 53], chord_to_midi('A#m', [1, 2, 3]))
+
+    def test_GM_545(self):
+        self.assertEqual([79, 71, 74], chord_to_midi('GM', [5,4,5]))
 
 
 class TestParseMusicalNote(unittest.TestCase):
