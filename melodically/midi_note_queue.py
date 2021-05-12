@@ -68,7 +68,6 @@ class MidiNoteQueue:
         :return: list of notes in standard notation
         """
         notes = []
-        # TODO: update readme with new usage
         self.clean_unclosed_note_ons()  # cleaning the container
 
         for msg in self._container:
