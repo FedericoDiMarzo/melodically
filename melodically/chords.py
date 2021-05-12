@@ -60,3 +60,23 @@ def get_chord_tones(chord_dict):
 # adding major, minor and dominant chords to the dictionary
 # TODO: check
 chord_tones = get_chord_tones(chord_tones)
+
+
+def chord_to_midi(chord, octave=3):
+    """
+    Given a certain chord, it returns a list with the midi values
+    of its notes. An octave parameter can be specified as a integer
+    indicating the octave shared between the notes, as a list of integers,
+    indicating the octave for each note of the chords (in this case, the size
+    of the list must be the same of the number of chord tones of the chord).
+
+    :param chord: target chord
+    :param octave: octave of all the notes or of the single notes in case a list is passed
+    :return: a list of midi note values of the chord tones of the chord
+    """
+    notes = chord_tones[chord]
+    if isinstance(octave, list):  # if octave is a list contains multiple values for each note
+        midi_notes = [std_to_midi(n, o) for (n, o) in (notes, octave)]
+    else:
+        midi_notes = [std_to_midi(n, octave) for n in notes]
+    return midi_notes
