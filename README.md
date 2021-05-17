@@ -79,8 +79,6 @@ x: random tone
 An abstract melody can be realized in a particular chord; in order to obtain the correct abstract melody symbol, is necessary to input both a note in standard notation, and a chord. To obtain a note in standard notation from a midi note value, an additional parsing function is needed.
 
 ```python
-midi_msg = note_queue.pop() # getting a midi message
-note_midi = midi_msg['note'] # getting the midi note number
 note = 'G'
 chord = 'CM' # C major chord
 abstract_note = m.parse_musical_note(note, chord) # from std note notation to abstract note notation
@@ -150,18 +148,15 @@ Sometimes the informative content of a melody can only be found in the rhythm or
 ```python
 current_chord = 'Dm'
 bpm = 125
-durations = amp.get_durations(bpm)
-
-notes = midi_queue.get_notes()
-
-full_melody = parse_melody(midi_queue, current_chord, durations)
+durations = m.get_durations(bpm)
+full_melody = m.parse_melody(midi_queue, current_chord, durations)
 ```
 
 The output symbols of a melodic parsing, are just a combination of the abstract note symbols and the rhythmic symbols.
 
 ``` python
 # example melody
-['c4', 'c4', 'x8', 'x8', 'r4', 'l2, r2, l1]
+['c4', 'c4', 'x8', 'x8', 'r4', 'l2', 'r2', 'l1']
 
 ```
 
