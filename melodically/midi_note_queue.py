@@ -22,27 +22,43 @@ class MidiNoteQueue:
         # threshold in seconds to discard notes that are too close
         self._minimumInterval = 0.06
 
-    def push(self, midi_msg):
+    def push(self, msg_type, note, timestamp=None):
         """
         Pushes a note_on/off message in the queue.
         If the note_on message is too close with the last note_on, the new entry is discarded.
         If a note_off message doesn't close a note_on message, the new entry is discarded.
 
-        :param midi_msg: dictionary returned by the get_timestamp_msg function
+        :param msg_type: 'note_on' or 'note_off'
+        :param note: midi note value
+        :param timestamp: optional timestamp value, if none is provided, it's calculated during the method execution
         """
 
-        if midi_msg['type'] == 'note_on':  # note_on case
-            # checking if the pushed note_on is too close with the last one
-            if midi_msg['timestamp'] - self._lastTimestamp > self._minimumInterval:
-                self._lastTimestamp = midi_msg['timestamp']
-                self._openNoteOnList.append(midi_msg['note'])
-                self._container.append(midi_msg)
+        # getting the timestamp if none is provided
+        if not timestamp:
+            timestamp = time.time()
 
-        elif midi_msg['type'] == 'note_off':  # note_off case
+        # note_on case
+        if msg_type == 'note_on':
+            # checking if the pushed note_on is too close with the last one
+            if timestamp - self._lastTimestamp > self._minimumInterval:
+                self._lastTimestamp = timestamp
+                self._openNoteOnList.append(note)
+                self._container.append({
+                    'type': msg_type,
+                    'note': note,
+                    'timestamp': timestamp
+                })
+
+        # note_off case
+        elif msg_type == 'note_off':
             # checking if the note_off closes a note on
-            if midi_msg['note'] in self._openNoteOnList:
-                self._openNoteOnList.remove(midi_msg['note'])
-                self._container.append(midi_msg)
+            if note in self._openNoteOnList:
+                self._openNoteOnList.remove(note)
+                self._container.append({
+                    'type': msg_type,
+                    'note': note,
+                    'timestamp': timestamp
+                })
 
         # all other types of midi messages are excluded automatically
 
@@ -65,6 +81,7 @@ class MidiNoteQueue:
     def get_notes(self):
         """
         Gets a list of notes in standard notation from the note on messages.
+
         :return: list of notes in standard notation
         """
         notes = []
@@ -94,20 +111,3 @@ class MidiNoteQueue:
         self._container.clear()
         self._lastTimestamp = 0
         self._openNoteOnList = []
-
-
-def get_timestamp_msg(midi_msg_type, midi_note_value):
-    """
-    Function that given a note_on/off midi message returns a dictionary
-    that encapsule the message with a timestamp, that can be used to determine
-    the duration between a note_on and note_off message.
-
-    :param midi_msg_type: note_on or note_off
-    :param midi_note_value: midi note number
-    :return: dictionary containing the midi message and a timestamp
-    """
-    return {
-        'type': midi_msg_type,
-        'note': midi_note_value,
-        'timestamp': time.time()
-    }
