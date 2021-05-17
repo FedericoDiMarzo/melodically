@@ -15,15 +15,13 @@ pip install melodically
 ## MidiQueue
 To parse note_on/note_off messages, a particular data structure called MidiQueue is used. This queue stores midi note messages with a timestamp, that is needed to parse the rhythmic structure of a melody. This data structure is supposed to collect only melodies, chords are not supported, if multiple note_on messages are pushed into it with timestamps too close with each other, only the first one will be mantained.
 
-In order to insert a new note message with a timestamp included, the get_timestamp_message function must be used.
-
 ```python
 import melodically as m
 
 note_queue = m.MidiNoteQueue()
-note_queue.push(m.get_timestamp_msg('note_on', 47))
+note_queue.push(msg_type='note_on', note=47)
 # some temporal delay...
-note_queue.push(m.get_timestamp_msg('note_off', 47))
+note_queue.push(msg_type='note_off', note=47)
 ```
 
 Some other methods are exposed for extra flexibility.
