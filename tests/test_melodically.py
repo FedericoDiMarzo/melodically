@@ -39,7 +39,7 @@ class TestChordToMidi(unittest.TestCase):
         self.assertEqual([34, 37, 53], chord_to_midi('A#m', [1, 2, 3]))
 
     def test_GM_545(self):
-        self.assertEqual([79, 71, 74], chord_to_midi('GM', [5,4,5]))
+        self.assertEqual([79, 71, 74], chord_to_midi('GM', [5, 4, 5]))
 
 
 class TestParseMusicalNote(unittest.TestCase):
@@ -98,14 +98,14 @@ class TestMidiNoteQueue(unittest.TestCase):
     def test_clear(self):
         midi_queue = MidiNoteQueue()
         for msg in midi_note_queue_mock_3:
-            midi_queue.push(msg)
+            midi_queue.push(msg['type'], msg['note'], msg['timestamp'])
         midi_queue.clear()
         self.assertEqual([], midi_queue.get_container())
 
     def test_get_notes(self):
         midi_queue = MidiNoteQueue()
         for msg in midi_note_queue_mock_2:
-            midi_queue.push(msg)
+            midi_queue.push(msg['type'], msg['note'], msg['timestamp'])
         midi_queue.clean_unclosed_note_ons()
         self.assertEqual(['A#'], midi_queue.get_notes())
 
@@ -138,7 +138,7 @@ class TestParseRhythm(unittest.TestCase):
         self.durations = get_durations(60)
         self.midi_queue = MidiNoteQueue()
         for msg in midi_note_queue_mock_3:
-            self.midi_queue.push(msg)
+            self.midi_queue.push(msg['type'], msg['note'], msg['timestamp'])
 
     def test_0(self):
         result = parse_rhythm(self.midi_queue, self.durations)
@@ -146,8 +146,8 @@ class TestParseRhythm(unittest.TestCase):
 
     def test_1(self):
         self.midi_queue.clear()
-        for note_msg in midi_note_queue_mock_4:
-            self.midi_queue.push(note_msg)
+        for msg in midi_note_queue_mock_4:
+            self.midi_queue.push(msg['type'], msg['note'], msg['timestamp'])
         result = parse_rhythm(self.midi_queue, self.durations)
         self.assertEqual(['1', '16', 'r16', '4'], result)
 
@@ -156,8 +156,8 @@ class TestParseMelody(unittest.TestCase):
     def setUp(self):
         self.durations = get_durations(60)
         self.midi_queue = MidiNoteQueue()
-        for note_msg in midi_note_queue_mock_4:
-            self.midi_queue.push(note_msg)
+        for msg in midi_note_queue_mock_4:
+            self.midi_queue.push(msg['type'], msg['note'], msg['timestamp'])
 
     def test_0(self):
         result = parse_melody(self.midi_queue, 'CM', self.durations)
