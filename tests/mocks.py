@@ -193,9 +193,9 @@ midi_note_queue_mock_4 = [
 
 midi_note_queue_1 = MidiNoteQueue()
 for msg in midi_note_queue_mock_1:
-    midi_note_queue_1.push(msg)
+    midi_note_queue_1.push(msg['type'], msg['note'], msg['timestamp'])
 
 midi_note_queue_2 = MidiNoteQueue()
 for msg in midi_note_queue_mock_2:
-    midi_note_queue_2.push(msg)
+    midi_note_queue_2.push(msg['type'], msg['note'], msg['timestamp'])
 midi_note_queue_2.clean_unclosed_note_ons()
