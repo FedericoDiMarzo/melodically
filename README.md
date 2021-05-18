@@ -12,7 +12,7 @@ The package can easily be installed using the pip package manager.
 pip install melodically
 ```
 
-## MidiQueue
+## MidiNoteQueue
 To parse note_on/note_off messages, a particular data structure called MidiQueue is used. This queue stores midi note messages with a timestamp, that is needed to parse the rhythmic structure of a melody. This data structure is supposed to collect only melodies, chords are not supported, if multiple note_on messages are pushed into it with timestamps too close with each other, only the first one will be mantained.
 
 ```python
