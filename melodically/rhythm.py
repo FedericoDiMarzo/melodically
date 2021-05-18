@@ -63,5 +63,5 @@ def sequence_fits_measures(rhythmic_sequence, measures):
     :param measures: number of measures
     :return: True if the sequence fits the measures
     """
-    rhythmic_sequence_values = [normalized_durations[key] for key in rhythmic_sequence]
+    rhythmic_sequence_values = [normalized_durations[key.replace('r', '')] for key in rhythmic_sequence]
     return sum(rhythmic_sequence_values) <= 4 * measures

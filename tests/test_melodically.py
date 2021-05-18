@@ -213,6 +213,10 @@ class TestSequenceFitsMeasures(unittest.TestCase):
         sequence = ['8t', '8t', '8t', '8t', '8t', '8t', '8t', '8t', '8t']
         self.assertEqual(True, sequence_fits_measures(sequence, 1))
 
+    def test_sequence9(self):
+        sequence = ['r1']
+        self.assertEqual(True, sequence_fits_measures(sequence, 1))
+
 
 if __name__ == '__main__':
     unittest.main()
