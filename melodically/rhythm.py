@@ -65,3 +65,19 @@ def sequence_fits_measures(rhythmic_sequence, measures):
     """
     rhythmic_sequence_values = [normalized_durations[key.replace('r', '')] for key in rhythmic_sequence]
     return sum(rhythmic_sequence_values) <= 4 * measures
+
+
+# TODO: documentation
+def clip_rhythmic_sequence(rhythmic_sequence, measures):
+    """
+    Returns a new list of rhythmical symbols
+    that fits in a certain number of measures
+
+    :param rhythmic_sequence: list of rhythmical symbols
+    :param measures: number of measures
+    :return: new list of rhythmical symbols that fits int the number of measures
+    """
+    result = rhythmic_sequence.copy()
+    while not sequence_fits_measures(result, measures):
+        del result[-1]
+    return result
