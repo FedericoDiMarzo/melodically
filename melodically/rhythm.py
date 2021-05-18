@@ -51,4 +51,17 @@ def get_nearest_rhythm(interval, rhythmical_durations):
     return rhythmical_durations_keys[result_index]
 
 
+normalized_durations = get_durations(60)
 
+
+# TODO: documentation
+def sequence_fits_measures(rhythmic_sequence, measures):
+    """
+    Checks if a rhythmic sequence fits inside a certain number of 4/4 measures.
+
+    :param rhythmic_sequence: list of rhythmical symbols
+    :param measures: number of measures
+    :return: True if the sequence fits the measures
+    """
+    rhythmic_sequence_values = [normalized_durations[key] for key in rhythmic_sequence]
+    return sum(rhythmic_sequence_values) <= 4 * measures
