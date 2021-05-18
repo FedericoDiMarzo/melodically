@@ -85,7 +85,7 @@ class MidiNoteQueue:
         :return: list of notes in standard notation
         """
         notes = []
-        self.clean_unclosed_note_ons()  # cleaning the container
+        # self.clean_unclosed_note_ons()  # cleaning the container
 
         for msg in self._container:
             if msg['type'] == 'note_on':
