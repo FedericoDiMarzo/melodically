@@ -184,5 +184,35 @@ class TestHarmonicState(unittest.TestCase):
         self.assertEqual(modes_dict['A'][0][5], self.hstate.get_mode_notes())
 
 
+class TestSequenceFitsMeasures(unittest.TestCase):
+    def test_sequence1(self):
+        sequence = ['4', '4', '4', '4']
+        self.assertEqual(True, sequence_fits_measures(sequence, 1))
+
+    def test_sequence2(self):
+        sequence = ['4', '4', '4', '4', '16']
+        self.assertEqual(False, sequence_fits_measures(sequence, 1))
+
+    def test_sequence3(self):
+        sequence = ['16', '16', '8', '4', '4', '16']
+        self.assertEqual(True, sequence_fits_measures(sequence, 1))
+
+    def test_sequence4(self):
+        sequence = ['16', '16', '8', '4', '4', '8', '8']
+        self.assertEqual(True, sequence_fits_measures(sequence, 1))
+
+    def test_sequence5(self):
+        sequence = ['16', '16', '8', '4', '4', '8', '8', '16']
+        self.assertEqual(False, sequence_fits_measures(sequence, 1))
+
+    def test_sequence7(self):
+        sequence = ['1', '1', '1', '1']
+        self.assertEqual(True, sequence_fits_measures(sequence, 4))
+
+    def test_sequence8(self):
+        sequence = ['8t', '8t', '8t', '8t', '8t', '8t', '8t', '8t', '8t']
+        self.assertEqual(True, sequence_fits_measures(sequence, 1))
+
+
 if __name__ == '__main__':
     unittest.main()
