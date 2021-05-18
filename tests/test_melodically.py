@@ -218,5 +218,28 @@ class TestSequenceFitsMeasures(unittest.TestCase):
         self.assertEqual(True, sequence_fits_measures(sequence, 1))
 
 
+class TestClipRhythmicSequence(unittest.TestCase):
+    def test_sequence1(self):
+        sequence = ['1', '1', '1r', '1']
+        self.assertEqual(['1', '1', '1r'], clip_rhythmic_sequence(sequence, 3))
+
+    def test_sequence2(self):
+        sequence = ['8', '8', '4', '4', '4', '16t']
+        self.assertEqual(['8', '8', '4', '4', '4'], clip_rhythmic_sequence(sequence, 1))
+
+    def test_sequence3(self):
+        sequence = ['1', '1', '1', '1']
+        self.assertEqual(['1', '1', '1', '1'], clip_rhythmic_sequence(sequence, 4))
+
+    def test_sequence4(self):
+        sequence = ['1']
+        self.assertEqual(['1'], clip_rhythmic_sequence(sequence, 1))
+
+    def test_sequence5(self):
+        sequence = ['1', '1', '1', '1']
+        clip_rhythmic_sequence(sequence, 1)
+        self.assertEqual(['1', '1', '1', '1'], sequence)
+
+
 if __name__ == '__main__':
     unittest.main()
