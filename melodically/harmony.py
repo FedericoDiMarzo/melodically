@@ -15,7 +15,7 @@ Musical notes with the flat notation
 musical_notes_b = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
 """
-this data structure contains all the
+This data structure contains all the
 possible semitone sequences to construct
 many families of modal scales
 """
@@ -23,6 +23,13 @@ mode_signatures = [
     [2, 2, 1, 2, 2, 2, 1],  # TTSTTTS
     # [2, 2, 1, 3, 1, 2, 1],
 ]
+
+"""
+This data structure contains all the
+possible chords sequences to construct
+many families of modal scales
+"""
+chord_signatures = ['M', 'm', 'm', 'M', '7', 'm']  # TODO the VII should be dim
 
 
 def midi_to_std(midi_note):
@@ -73,19 +80,42 @@ def get_all_modes(root):
         current_sequence = np.array(mode_signatures[i])
         for j in range(7):  # iterating for each mode in the family
             modes_note_std[i].append([root])
-            last_note = musical_notes.index(root)
+            last_note_index = musical_notes.index(root)
             for k in range(6):  # iterating for each note in the scale
-                last_note = (last_note + current_sequence[k]) % 12
-                modes_note_std[i][j].append(musical_notes[last_note])
+                last_note_index = (last_note_index + current_sequence[k]) % 12
+                modes_note_std[i][j].append(musical_notes[last_note_index])
             current_sequence = np.roll(current_sequence, -1)  # circular shift of the note sequence
     return modes_note_std
 
 
+def get_all_chords(root, scales):
+    """
+    given a root, calculates all the chords for all the modes
+
+    :param root: note in std notation
+    :param scales: list of scales
+    :return: multi dimensional list of size [len(mode_signatures)x7x7] containing the chords for each mode
+    """
+    modes_chords = []
+    chord_sequence_np = np.array(chord_signatures)
+    for i in range(7):  # iterating for each mode
+        note_sequence = scales[0][i]
+        modes_chords.append([x + y for x, y in zip(note_sequence, chord_sequence_np.tolist())])
+        chord_sequence_np = np.roll(chord_sequence_np, -1)
+    return modes_chords
+
+
 """
-dictionary containing all the notes as keys and
+Dictionary containing all the notes as keys and
 the respective modes as value
 """
 modes_dict = {root: get_all_modes(root) for root in musical_notes}
+
+"""
+Dictionary containing all the notes as keys and
+the respective chords for each mode as value
+"""
+modes_chords_dict = {root: get_all_chords(root, modes_dict[root]) for root in musical_notes}
 
 
 def harmonic_affinities(root, notes_std):
@@ -108,7 +138,7 @@ def harmonic_affinities(root, notes_std):
     # counting the occurrences of the input notes
     counter = Counter(notes_std)
 
-    # bulting the multidimensional affinity list
+    # building the multidimensional affinity list
     affinities = []
     for i in range(len(mode_signatures)):  # for each mode signature (interval structure)
         affinities.append([])
