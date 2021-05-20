@@ -158,9 +158,9 @@ The output symbols of a melodic parsing, are just a combination of the abstract 
 
 ```
 
-## Obtain chord tones and color tones from a given chord
+## Enriching a chord dictionary
 
-Dealing with the autogeneration of chords or melodies, the user easily realizes the importance to enrich his dictionary with tones that do not precisely belong to the specific chord he is playing in. From this concept, we develop a method that returns all the musical connections that a single chord can provide.
+Dealing with the autogeneration of chords or melodies, the user easily realizes the importance to enrich his dictionary with color chords (chords composed by four notes withspecificintervals). From this concept, we develop a method that returns all the musical connections that a single chord can provide.
 
 The user can add all the Major, Minor, or Dominant 7th to a given chord dictionary.
 
@@ -171,6 +171,10 @@ upd_chord_dict = m.get_chord_tones(chord_dict)
 # example of a new dictionary
 upd_chord_dict = [...]
 ```
+
+
+## Handling with MIDI protocol
+
 
 Often, dealing with the MIDI protocol, would be beneficial to have a method that automatically gives all MIDI values of all the notes that compose a single chord.
 
