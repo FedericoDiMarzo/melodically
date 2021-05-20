@@ -181,10 +181,8 @@ Often, dealing with the MIDI protocol, would be beneficial to have a method that
 An octave parameter can be specified as a integer indicating the octave shared between the notes, as a list of integers, indicating the octave for each note of the chords (in this case, the size of the list must be the same of the number of chord tones of the chord).
 
 ```python
-chord = ["Am"]
-octave = 3
-
-midi_chord = m.chord_to_midi(chord, octave)
+chord = 'Am'
+midi_chord = m.chord_to_midi(chord, octave=3)
 
 # example for the given chord
 midi_chord = [...]
