@@ -139,6 +139,33 @@ After defining the durations from the bpm, the parsing can follow. It will retur
 rhythmic_symbols = amp.parse_rhythm(note_queue, durations)
 ```
 
+## Manage rhythmic sequencrs into measures
+
+Given any rhythmical sequence, the user can verify if it fits inside the '4/4' rhythmical subdivision.
+
+```python
+rhythmic_sequence = [...]
+measures = 2
+
+# example
+if sequence_fit_measures(rhythmic_sequence, measures)
+  print("The sequence fits into given measure")
+
+```
+
+Alternatively, given a specific number of measures, the following method will return a new list of rhythmical symbols that can fit into it.
+
+```python
+rhythmic_sequence = [...]
+measures = 3
+
+symbols = clip_rhythmic_sequence(rhythmic_sequence, measures)
+
+# example
+symbols = [...]
+
+```
+
 ## Parsing entire melodies
 
 Sometimes the informative content of a melody can only be found in the rhythm or in the armonic relations between the notes and a chord, but in many other occasions, is the underlying relation between the two that really expresses the message that a musitian is trying to share with his/her performance. Following this perspective, it can be useful to perform both melodic and rhythmic parsing from a single MidiQueue, and read the resulting symbols as pairs. Let's suppose to parse a MidiQueue that contains a melody playing on a Dm chord
