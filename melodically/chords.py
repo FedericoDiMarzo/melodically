@@ -63,7 +63,7 @@ chord_tones = get_chord_tones(chord_tones)
 
 
 def chord_to_midi(chord, octave=3):
-    # TODO: README update
+    # TODO: check README if correct
     """
     Given a certain chord, it returns a list with the midi values
     of its notes. An octave parameter can be specified as a integer
