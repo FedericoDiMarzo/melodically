@@ -18,8 +18,9 @@ def get_chord_tones(chord_dict):
     :return: the updated chord dictionary
     """
     for root in musical_notes:
-        # 0 -> XM (major) ; 4 -> X7 (dominant); 5 -> Xm (minor)
-        for shift in [0, 4, 5]:
+        # 0 -> XM (major) ; 4 -> X7 (dominant); 5 -> Xm (minor); 6 -> dim (diminished)
+        # ODO: add diminished to README (Andre)
+        for shift in [0, 4, 5, 6]:
             # root in std notation
             root_midi = std_to_midi(root)
 
@@ -37,8 +38,8 @@ def get_chord_tones(chord_dict):
             c_tones = [midi_to_std(root_midi + diatonic_scale_absolute_intervals[i]) for i in chord_tones_indices]
             l_tones = [midi_to_std(root_midi + diatonic_scale_absolute_intervals[i]) for i in color_tones_indices]
 
-            # dominant chords have the VII in the chord tones
-            if shift == 4:
+            # dominant and diminished chords have the VII in the chord tones
+            if shift == 4 or shift == 6:
                 c_tones.append(l_tones.pop(3))
 
             # choosing the suffix
@@ -46,6 +47,8 @@ def get_chord_tones(chord_dict):
                 suffix = 'M'
             elif shift == 4:
                 suffix = '7'
+            elif shift == 6:
+                suffix = 'dim'
             else:
                 suffix = 'm'
 
@@ -58,7 +61,6 @@ def get_chord_tones(chord_dict):
 
 
 # adding major, minor and dominant chords to the dictionary
-# TODO: check
 chord_tones = get_chord_tones(chord_tones)
 
 
