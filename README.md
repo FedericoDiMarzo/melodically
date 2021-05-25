@@ -144,12 +144,14 @@ rhythmic_symbols = amp.parse_rhythm(note_queue, durations)
 Given any rhythmical sequence, the user can verify if it fits inside the '4/4' rhythmical subdivision.
 
 ```python
-rhythmic_sequence = [...]
-measures = 2
+rhythmic_sequence = ['4', '4', '4', '4', '1']
+measures = 1
 
 # example
 if sequence_fit_measures(rhythmic_sequence, measures)
+  # this part of code is never reached 
   print("The sequence fits into given measure")
+  
 
 ```
 
@@ -160,9 +162,7 @@ rhythmic_sequence = [...]
 measures = 3
 
 symbols = clip_rhythmic_sequence(rhythmic_sequence, measures)
-
-# example
-symbols = [...]
+# [...(result)]
 
 ```
 
