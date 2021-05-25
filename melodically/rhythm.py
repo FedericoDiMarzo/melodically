@@ -67,7 +67,6 @@ def sequence_fits_measures(rhythmic_sequence, measures):
     return sum(rhythmic_sequence_values) <= 4 * measures
 
 
-# TODO: check README if correct
 def clip_rhythmic_sequence(rhythmic_sequence, measures):
     """
     Returns a new list of rhythmical symbols
