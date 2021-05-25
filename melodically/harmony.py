@@ -29,7 +29,7 @@ This data structure contains all the
 possible chords sequences to construct
 many families of modal scales
 """
-chord_signatures = ['M', 'm', 'm', 'M', '7', 'm']  # TODO the VII should be dim
+chord_signatures = ['M', 'm', 'm', 'M', '7', 'm', 'dim']
 
 
 def midi_to_std(midi_note):
