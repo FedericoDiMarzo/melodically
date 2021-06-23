@@ -39,6 +39,9 @@ class HarmonicState:
         :return: currentMode
         """
         notes_std = [n for n in self.noteBuffer]
+        if not notes_std:
+            return
+
         root = get_root(notes_std)
         modes_affinities = harmonic_affinities(root, notes_std)
         mode_signature_index = modes_affinities.index(max(modes_affinities))
