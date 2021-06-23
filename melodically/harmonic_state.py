@@ -39,18 +39,16 @@ class HarmonicState:
         :return: currentMode
         """
         notes_std = [n for n in self.noteBuffer]
-        if not notes_std:
-            return
+        if notes_std:
+            root = get_root(notes_std)
+            modes_affinities = harmonic_affinities(root, notes_std)
+            mode_signature_index = modes_affinities.index(max(modes_affinities))
+            tmp = modes_affinities[mode_signature_index]  # sequence with the lowest distance
+            mode_index = tmp.index(max(tmp))
 
-        root = get_root(notes_std)
-        modes_affinities = harmonic_affinities(root, notes_std)
-        mode_signature_index = modes_affinities.index(max(modes_affinities))
-        tmp = modes_affinities[mode_signature_index]  # sequence with the lowest distance
-        mode_index = tmp.index(max(tmp))
-
-        self.currentMode['root'] = root
-        self.currentMode['mode_signature_index'] = mode_signature_index
-        self.currentMode['mode_index'] = mode_index
+            self.currentMode['root'] = root
+            self.currentMode['mode_signature_index'] = mode_signature_index
+            self.currentMode['mode_index'] = mode_index
 
         return self.currentMode
 
